@@ -64,7 +64,11 @@ app
     }
     const index = todos.findIndex((todo) => todo.id === Number(req.params.id));
     if (index !== -1) todos[index] = editedTodo;
-    else res.status(404).json({ status: "error", message: " Todo not found" });
+    else res.status(404).json({ status: "error", message: "Todo not found" });
+
+    fs.writeFile("./MOCK_DATA.json", JSON.stringify(todos), (err) => {
+      console.log(err);
+    });
     res.status(200).json(todos);
   })
   .delete((req, res) => {
@@ -85,19 +89,75 @@ app
 app
   .route("/api/active/:id")
   .patch((req, res) => {
-    // TODO: Implement Patch for active todos only
+    const editedTodo = { ...req.body };
+    let todo = todos.find(
+      (todo) => todo.id === Number(req.params.id) && todo.status === true
+    );
+    todo = { id: Number(req.params.id), ...todo, ...editedTodo };
+    // res;
+
+    const index = todos.findIndex((todo) => todo.id === Number(req.params.id));
+    if (index !== -1) todos[index] = todo;
+    else res.status(404).json({ status: "error", message: "Todo not found" });
+
+    fs.writeFile("./MOCK_DATA.json", JSON.stringify(todos), (err) => {
+      console.log(err);
+    });
+
+    res.status(200).json({ status: "success", todo: todos[index] });
   })
   .delete((req, res) => {
-    // TODO: Implement Delete for active todos only
+    const todoId = Number(req.params.id);
+    const filteredTodos = todos.filter(
+      (todo) => todo.id !== todoId && todo.status === true
+    );
+
+    fs.writeFile("./MOCK_DATA.json", JSON.stringify(filteredTodos), (err) => {
+      if (err)
+        return res
+          .status(500)
+          .json({ status: "error", message: "Failed to update todos" });
+      else res.status(200).json({ status: success, todos: filteredTodos });
+    });
+
+    res.json({ status: "success", todos: filteredTodos });
   });
 
 app
   .route("/api/completed/:id")
   .patch((req, res) => {
-    // TODO: Implement Patch for completed todos only
+    const editedTodo = { ...req.body };
+    let todo = todos.find(
+      (todo) => todo.id === Number(req.params.id) && todo.status === false
+    );
+    todo = { id: Number(req.params.id), ...todo, ...editedTodo };
+    // res;
+
+    const index = todos.findIndex((todo) => todo.id === Number(req.params.id));
+    if (index !== -1) todos[index] = todo;
+    else res.status(404).json({ status: "error", message: "Todo not found" });
+
+    fs.writeFile("./MOCK_DATA.json", JSON.stringify(todos), (err) => {
+      console.log(err);
+    });
+
+    res.status(200).json({ status: "success", todo: todos[index] });
   })
   .delete((req, res) => {
-    // TODO: Implement Delete for completed todos only
+    const todoId = Number(req.params.id);
+    const filteredTodos = todos.filter(
+      (todo) => todo.id !== todoId && todo.status === false
+    );
+
+    fs.writeFile("./MOCK_DATA.json", JSON.stringify(filteredTodos), (err) => {
+      if (err)
+        return res
+          .status(500)
+          .json({ status: "error", message: "Failed to update todos" });
+      else res.status(200).json({ status: success, todos: filteredTodos });
+    });
+
+    res.json({ status: "success", todos: filteredTodos });
   });
 
 //   Turn on server
