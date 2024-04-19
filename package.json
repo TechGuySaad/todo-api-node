@@ -1,0 +1,23 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "Todo app api taken from the frontendmentor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "todo",
+    "frontendmentor",
+    "backend",
+    "api",
+    "nodejs",
+    "express"
+  ],
+  "author": "webdevsaad",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "random": "^4.1.0"
+  }
+}
