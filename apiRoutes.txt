@@ -4,18 +4,14 @@ GET /api/completed - Return all completed tasks
 
 ------------------------------------------------------------------------------------------
 
-POST /api/active - Create new todo
+POST /api - Create new todo
 
 -------------------------------------------------------------------------------------------
 
 PATCH /api/:id - Update a todo from all todos
-PATCH /api/active/:id - Update a todo from active todo
-PATCH /api/completed/:id - Update a todo from completed todos
 
 --------------------------------------------------------------------------------------
 
 DELETE  /api/:id - Delete a todo from all todos 
-DELETE /api/active/:id - Delete a todo from active todos
-DELETE /api/completed/:id - Delete a todo from completed todos
 
 --------------------------------------------------------------------------------------
