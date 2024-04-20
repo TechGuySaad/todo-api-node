@@ -27,13 +27,6 @@ const Todo = mongoose.model("todo", todoSchema);
 //MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
 
-// GET REQUESTS HANDLING
-
-// app.get("/api", async (req, res) => {
-//   const result = await Todo.find({});
-//   res.status(200).json({ status: "success", result });
-// });
-
 // GET AND POST REQUESTS
 
 app
@@ -85,19 +78,12 @@ app
 
     res.status(200).json({ status: "success", result });
   })
-  .delete((req, res) => {
-    const todoId = Number(req.params.id);
-    const filteredTodos = todos.filter((todo) => todo.id !== todoId);
+  .delete(async (req, res) => {
+    // const todoId = Number(req.params.id);
 
-    fs.writeFile("./MOCK_DATA.json", JSON.stringify(filteredTodos), (err) => {
-      if (err)
-        return res
-          .status(500)
-          .json({ status: "error", message: "Failed to update todos" });
-      else res.status(200).json({ status: success, todos: filteredTodos });
-    });
+    const deletedTodo = await Todo.findByIdAndDelete({ _id: req.params.id });
 
-    res.json({ status: "success", todos: filteredTodos });
+    res.status(200).json({ status: "success", deletedTodo });
   });
 
 //   Turn on server
