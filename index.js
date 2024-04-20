@@ -1,10 +1,28 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const fs = require("fs");
 const todos = require("./MOCK_DATA.json");
 
 const app = express();
 
 const PORT = 8000;
+
+//CONNECTION
+mongoose
+  .connect("mongodb://127.0.0.1:27017/todo-app")
+  .then(() => console.log("Connected to database"))
+  .catch((err) => console.log("There was an error: ", err));
+//SCHEMA
+const todoSchema = new mongoose.Schema({
+  task: {
+    type: String,
+  },
+  status: {
+    type: Boolean,
+  },
+});
+//MODEL
+const Todo = mongoose.model("todo", todoSchema);
 
 //MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
@@ -27,22 +45,17 @@ app.get("/api/completed", (req, res) => {
 
 // POST REQUESTS HANDLING
 
-app.post("/api/active", (req, res) => {
-  const newTodo = req.body;
-  todos.push({ ...req.body });
+app.post("/api/active", async (req, res) => {
+  const body = req.body;
 
-  fs.writeFile("./MOCK_DATA.json", JSON.stringify(todos), (err) => {
-    if (err)
-      return res.status(500).json({
-        status: "error",
-        message: "There was an error in submitting your form on server.",
-      });
-    else
-      res.status(200).json({
-        status: "success",
-        message: "Your form was submitted.",
-        submitted_response: req.body,
-      });
+  const result = await Todo.create({
+    task: body.task,
+    status: true,
+  });
+
+  res.status(201).json({
+    status: "success",
+    result,
   });
 });
 
