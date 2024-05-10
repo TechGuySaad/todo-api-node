@@ -1,0 +1,17 @@
+GET /api - Return All Data
+GET /api/active - Return all active tasks
+GET /api/completed - Return all completed tasks
+
+------------------------------------------------------------------------------------------
+
+POST /api - Create new todo
+
+-------------------------------------------------------------------------------------------
+
+PATCH /api/:id - Update a todo from all todos
+
+--------------------------------------------------------------------------------------
+
+DELETE  /api/:id - Delete a todo from all todos 
+
+--------------------------------------------------------------------------------------
