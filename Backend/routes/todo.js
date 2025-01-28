@@ -9,7 +9,7 @@ const {
 } = require("../controllers/todo");
 const router = express.Router();
 
-router.route("/").get(handleGetAllTodos).post(handleNewTodo);
+router.route("/home").get(handleGetAllTodos).post(handleNewTodo);
 
 // GET - ACTIVE TODOS
 
