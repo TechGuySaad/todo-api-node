@@ -17,7 +17,7 @@ router.get("/active", handleGetAllActiveTodos);
 
 // GET - COMPLETED TODOS
 
-router.get("/completed", handleGetAllCompletedTodos);
+router.get("/complete", handleGetAllCompletedTodos);
 
 //PATCH REQUESTS AND DELETE REQUESTS HANDLING
 
